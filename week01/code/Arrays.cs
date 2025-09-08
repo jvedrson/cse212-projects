@@ -1,3 +1,4 @@
+using System.Diagnostics;
 public static class Arrays
 {
     /// <summary>
@@ -13,7 +14,19 @@ public static class Arrays
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return []; // replace this return statement with your own
+        // Plan:
+        // 1. Iterate from 1 to "length"
+        // 2. Save the new value after multiplying it on each iteration into a list called "results"
+        // 3. Return "results" List as Array using spread method
+
+        List<double> results = [];
+
+        for (int i = 1; i <= length; i++)
+        {
+            results.Add(number * i);
+        }
+
+        return [.. results];
     }
 
     /// <summary>
@@ -29,5 +42,22 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        // Plan:
+        // 1. Validate "amount" is not greater than List.Count
+        // 2. Get lastElements according to the "amount" using getRange.
+        // 3. Remove elements from the List with RemoveRange.
+        // 4. Add the lastElements at the beginning using InsertRange
+
+        if (amount > data.Count)
+        {
+            Console.WriteLine("Error: According to 'data', the 'amount' value must be <= " + data.Count);
+            return;
+        }
+
+        var startFromIndex = data.Count - amount;
+        var lastElements = data.GetRange(startFromIndex, amount);
+        data.RemoveRange(startFromIndex, amount);
+        data.InsertRange(0, lastElements);
     }
 }
