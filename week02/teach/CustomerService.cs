@@ -1,19 +1,37 @@
-﻿/// <summary>
+﻿using System.Security.Cryptography;
+
+
+/// <summary>
 /// Maintain a Customer Service Queue.  Allows new customers to be 
 /// added and allows customers to be serviced.
 /// </summary>
-public class CustomerService {
-    public static void Run() {
+/// 
+/// var cService = new CustomerService(-1)
+/// cService.AddNewCustomer()
+public class CustomerService
+{
+    public static void Run()
+    {
         // Example code to see what's in the customer service queue:
         // var cs = new CustomerService(10);
-        // Console.WriteLine(cs);
+        var cs = new CustomerService(2);
+        Console.WriteLine(cs);
 
         // Test Cases
 
         // Test 1
-        // Scenario: 
+        // Scenario: Display an error message when the queue is full 
         // Expected Result: 
         Console.WriteLine("Test 1");
+        Console.WriteLine($"[0]Queue Max Size : {cs._maxSize}");
+        Console.WriteLine($"[0]Queue Count : {cs._queue.Count}");
+        cs.AddNewCustomer();
+        Console.WriteLine($"[1]Queue Count : {cs._queue.Count}");
+        cs.AddNewCustomer();
+        Console.WriteLine($"[2]Queue Count : {cs._queue.Count}");
+        cs.AddNewCustomer();
+        Console.WriteLine($"[3]Queue Count : {cs._queue.Count}");
+
 
         // Defect(s) Found: 
 
@@ -34,7 +52,8 @@ public class CustomerService {
     private readonly List<Customer> _queue = new();
     private readonly int _maxSize;
 
-    public CustomerService(int maxSize) {
+    public CustomerService(int maxSize)
+    { // -1
         if (maxSize <= 0)
             _maxSize = 10;
         else
@@ -45,8 +64,10 @@ public class CustomerService {
     /// Defines a Customer record for the service queue.
     /// This is an inner class.  Its real name is CustomerService.Customer
     /// </summary>
-    private class Customer {
-        public Customer(string name, string accountId, string problem) {
+    private class Customer
+    {
+        public Customer(string name, string accountId, string problem)
+        {
             Name = name;
             AccountId = accountId;
             Problem = problem;
@@ -56,7 +77,8 @@ public class CustomerService {
         private string AccountId { get; }
         private string Problem { get; }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return $"{Name} ({AccountId})  : {Problem}";
         }
     }
@@ -65,18 +87,26 @@ public class CustomerService {
     /// Prompt the user for the customer and problem information.  Put the 
     /// new record into the queue.
     /// </summary>
-    private void AddNewCustomer() {
+    private void AddNewCustomer()
+    {
+        // Receive only 10 participants or customers
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+
+
+
+        Console.WriteLine($"[AddNewCustomer] Queue Count {_queue.Count}");
+
+        if (_queue.Count >= _maxSize) // 2 >= 2 
+        {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
 
-        Console.Write("Customer Name: ");
+        Console.Write("Customer Name: "); // John
         var name = Console.ReadLine()!.Trim();
-        Console.Write("Account Id: ");
+        Console.Write("Account Id: "); // 123
         var accountId = Console.ReadLine()!.Trim();
-        Console.Write("Problem: ");
+        Console.Write("Problem: "); // Plumber
         var problem = Console.ReadLine()!.Trim();
 
         // Create the customer object and add it to the queue
@@ -87,7 +117,8 @@ public class CustomerService {
     /// <summary>
     /// Dequeue the next customer and display the information.
     /// </summary>
-    private void ServeCustomer() {
+    private void ServeCustomer()
+    {
         _queue.RemoveAt(0);
         var customer = _queue[0];
         Console.WriteLine(customer);
@@ -100,7 +131,8 @@ public class CustomerService {
     /// see the contents.
     /// </summary>
     /// <returns>A string representation of the queue</returns>
-    public override string ToString() {
+    public override string ToString()
+    {
         return $"[size={_queue.Count} max_size={_maxSize} => " + string.Join(", ", _queue) + "]";
     }
 }
