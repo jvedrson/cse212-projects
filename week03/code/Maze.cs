@@ -19,6 +19,10 @@ public class Maze
     private readonly Dictionary<ValueTuple<int, int>, bool[]> _mazeMap;
     private int _currX = 1;
     private int _currY = 1;
+    private const int LEFT = 0;
+    private const int RIGHT = 1;
+    private const int UP = 2;
+    private const int DOWN = 3;
 
     public Maze(Dictionary<ValueTuple<int, int>, bool[]> mazeMap)
     {
@@ -32,7 +36,24 @@ public class Maze
     /// </summary>
     public void MoveLeft()
     {
-        // FILL IN CODE
+        var position = (_currX, _currY);
+
+        if (_mazeMap.ContainsKey(position))
+        {
+            var directions = _mazeMap[position];
+            if (directions[LEFT])
+            {
+                _currX--;
+            }
+            else
+            {
+                throw new InvalidOperationException("Can't go that way!");
+            }
+        }
+        else
+        {
+            throw new InvalidOperationException("Current position is not in the maze map.");
+        }
     }
 
     /// <summary>
@@ -41,7 +62,24 @@ public class Maze
     /// </summary>
     public void MoveRight()
     {
-        // FILL IN CODE
+        var position = (_currX, _currY);
+
+        if (_mazeMap.ContainsKey(position))
+        {
+            var directions = _mazeMap[position];
+            if (directions[RIGHT])
+            {
+                _currX++;
+            }
+            else
+            {
+                throw new InvalidOperationException("Can't go that way!");
+            }
+        }
+        else
+        {
+            throw new InvalidOperationException("Current position is not in the maze map.");
+        }
     }
 
     /// <summary>
@@ -50,7 +88,24 @@ public class Maze
     /// </summary>
     public void MoveUp()
     {
-        // FILL IN CODE
+        var position = (_currX, _currY);
+
+        if (_mazeMap.ContainsKey(position))
+        {
+            var directions = _mazeMap[position];
+            if (directions[UP])
+            {
+                _currY--;
+            }
+            else
+            {
+                throw new InvalidOperationException("Can't go that way!");
+            }
+        }
+        else
+        {
+            throw new InvalidOperationException("Current position is not in the maze map.");
+        }
     }
 
     /// <summary>
@@ -59,7 +114,24 @@ public class Maze
     /// </summary>
     public void MoveDown()
     {
-        // FILL IN CODE
+        var position = (_currX, _currY);
+
+        if (_mazeMap.ContainsKey(position))
+        {
+            var directions = _mazeMap[position];
+            if (directions[DOWN])
+            {
+                _currY++;
+            }
+            else
+            {
+                throw new InvalidOperationException("Can't go that way!");
+            }
+        }
+        else
+        {
+            throw new InvalidOperationException("Current position is not in the maze map.");
+        }
     }
 
     public string GetStatus()
